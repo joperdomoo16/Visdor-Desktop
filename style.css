@@ -1,0 +1,101 @@
+body.fondo.aplicacion {
+  margin: 0;
+  padding: 20px;
+  background-color: transparent;
+  font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #f1f5f9;
+}
+
+.tarjeta.flotante {
+  background-color: #0f172ae6;
+  border: 1px solid #ffffff26;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 25px #00000080;
+  max-width: 460px;
+}
+
+.bloque.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.etiqueta.estado {
+  background-color: #10b98133;
+  color: #34d399;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.etiqueta.ciudad {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.bloque.contenido {
+  margin-bottom: 16px;
+}
+
+.texto.ayuda {
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.caja.respuesta {
+  background-color: #020617b3;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 90px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.texto.resultado {
+  font-size: 13px;
+  color: #f8fafc;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bloque.acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.boton.accion {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton.captura {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.boton.captura:hover {
+  background-color: #1d4ed8;
+}
+
+.boton.copiar {
+  background-color: #ffffff1a;
+  color: #ffffff;
+  border: 1px solid #ffffff33;
+}
+
+.boton.copiar:hover {
+  background-color: #ffffff33;
+}
