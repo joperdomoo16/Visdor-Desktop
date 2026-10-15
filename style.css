@@ -12,7 +12,7 @@ body.fondo.aplicacion {
   border-radius: 14px;
   padding: 18px;
   box-shadow: 0 10px 25px #00000080;
-  max-width: 460px;
+  max-width: 480px;
 }
 
 .bloque.cabecera {
@@ -53,13 +53,61 @@ body.fondo.aplicacion {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #ffffff14;
+  background-color: #000000;
 }
 
-.vista.previa {
+.vista.oculta {
+  display: none;
+}
+
+.lienzo.interactivo {
   width: 100%;
-  max-height: 140px;
-  object-fit: cover;
+  max-height: 200px;
   display: block;
+  cursor: crosshair;
+}
+
+.bloque.pregunta {
+  display: none;
+  margin-bottom: 12px;
+}
+
+.etiqueta.campo {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.fila.entrada {
+  display: flex;
+  gap: 8px;
+}
+
+.campo.texto {
+  flex: 1;
+  background-color: #020617b3;
+  border: 1px solid #ffffff26;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #f8fafc;
+  font-size: 13px;
+  outline: none;
+}
+
+.campo.texto:focus {
+  border-color: #38bdf8;
+}
+
+.boton.enviar {
+  background-color: #0284c7;
+  color: #ffffff;
+  padding: 8px 16px;
+  flex: none;
+}
+
+.boton.enviar:hover {
+  background-color: #0369a1;
 }
 
 .caja.respuesta {
@@ -67,8 +115,8 @@ body.fondo.aplicacion {
   border: 1px solid #ffffff14;
   border-radius: 8px;
   padding: 12px;
-  min-height: 90px;
-  max-height: 220px;
+  min-height: 80px;
+  max-height: 160px;
   overflow-y: auto;
 }
 
@@ -80,9 +128,48 @@ body.fondo.aplicacion {
   word-break: break-word;
 }
 
+.bloque.historial {
+  margin-top: 14px;
+}
+
+.etiqueta.seccion {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.caja.historial {
+  max-height: 100px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #ffffff14;
+  background-color: #02061766;
+}
+
+.elemento.historial {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #cbd5e1;
+  border-bottom: 1px solid #ffffff0d;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.elemento.historial:hover {
+  background-color: #ffffff14;
+  color: #ffffff;
+}
+
 .bloque.acciones {
   display: flex;
   gap: 10px;
+  margin-top: 14px;
 }
 
 .boton.accion {

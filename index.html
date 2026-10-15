@@ -15,16 +15,30 @@
     </div>
 
     <div class="bloque contenido">
-      <div class="texto ayuda">
+      <div class="texto ayuda" id="texto orientacion">
         De clic en el boton o presione Alt y Espacio para capturar la ventana activa en este computador.
       </div>
 
       <div class="bloque visual" id="area visual">
-        <video id="lienzo video" class="vista previa" autoplay muted playsinline></video>
+        <video id="lienzo video" class="vista oculta" autoplay muted playsinline></video>
+        <canvas id="lienzo seleccion" class="lienzo interactivo"></canvas>
+      </div>
+
+      <div class="bloque pregunta" id="area pregunta">
+        <label for="campo consulta" class="etiqueta campo">Pregunta sobre el recuadro seleccionado</label>
+        <div class="fila entrada">
+          <input type="text" id="campo consulta" class="campo texto" placeholder="Escriba su consulta aqui">
+          <button class="boton accion boton enviar" id="boton consultar">Consultar</button>
+        </div>
       </div>
 
       <div class="caja respuesta" id="caja solucion">
         <p class="texto resultado" id="texto prediccion">Esperando orden de captura del usuario.</p>
+      </div>
+
+      <div class="bloque historial">
+        <span class="etiqueta seccion">Historial reciente</span>
+        <div class="caja historial" id="listado historial"></div>
       </div>
     </div>
 
@@ -34,8 +48,10 @@
     </div>
   </div>
 
+  <script src="recorte visual.js"></script>
   <script src="captura ventana.js"></script>
   <script src="enrutador logico.js"></script>
+  <script src="historial local.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
