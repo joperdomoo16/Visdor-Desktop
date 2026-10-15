@@ -1,0 +1,21 @@
+{
+  "name": "visor-desktop",
+  "version": "1.0.0",
+  "description": "Asistente visual ligero para computador",
+  "main": "principal ventana.js",
+  "scripts": {
+    "iniciar": "electron .",
+    "compilar": "electron-builder -w"
+  },
+  "build": {
+    "appId": "com.visor.desktop",
+    "productName": "Visor Desktop",
+    "win": {
+      "target": "portable"
+    }
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}

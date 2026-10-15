@@ -9,12 +9,16 @@
 </head>
 <body class="fondo aplicacion">
   <div class="tarjeta flotante" id="visor principal">
-    <div class="bloque cabecera">
+    <div class="bloque cabecera" id="barra arrastre">
       <div class="zona estado">
         <span class="etiqueta estado" id="estado visor">Listo para captura</span>
+        <span class="etiqueta proteccion">Oculto en transmision</span>
         <span class="etiqueta ciudad">Bogota</span>
       </div>
-      <button class="boton icono" id="boton panel ajustes">Ajustes</button>
+      <div class="zona controles">
+        <button class="boton icono" id="boton panel ajustes">Ajustes</button>
+        <button class="boton cerrar" id="boton cerrar ventana">x</button>
+      </div>
     </div>
 
     <div class="bloque ajustes" id="area ajustes">

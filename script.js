@@ -43,6 +43,11 @@ const botonConsultar = document.getElementById("boton consultar");
 const campoConsulta = document.getElementById("campo consulta");
 const botonAjustes = document.getElementById("boton panel ajustes");
 const botonGuardarClaves = document.getElementById("boton guardar claves");
+const botonCerrar = document.getElementById("boton cerrar ventana");
+
+botonCerrar.addEventListener("click", function () {
+  window.close();
+});
 
 botonAjustes.addEventListener("click", function () {
   moduloInterfaz["alternar panel ajustes"]();
@@ -86,5 +91,14 @@ document.addEventListener("keydown", function (evento) {
     moduloCaptura["capturar ventana"]();
   }
 });
+
+try {
+  const electron = require("electron");
+  electron.ipcRenderer.on("orden captura global", function () {
+    moduloCaptura["capturar ventana"]();
+  });
+} catch (error) {
+  // Entorno sin ipc activo
+}
 
 moduloHistorial["dibujar listado"]();
