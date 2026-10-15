@@ -10,8 +10,20 @@
 <body class="fondo aplicacion">
   <div class="tarjeta flotante" id="visor principal">
     <div class="bloque cabecera">
-      <span class="etiqueta estado" id="estado visor">Listo para captura</span>
-      <span class="etiqueta ciudad">Bogota</span>
+      <div class="zona estado">
+        <span class="etiqueta estado" id="estado visor">Listo para captura</span>
+        <span class="etiqueta ciudad">Bogota</span>
+      </div>
+      <button class="boton icono" id="boton panel ajustes">Ajustes</button>
+    </div>
+
+    <div class="bloque ajustes" id="area ajustes">
+      <span class="etiqueta seccion">Claves de inteligencia artificial</span>
+      <label for="campo clave gemini" class="etiqueta campo">Clave privada de Gemini</label>
+      <input type="password" id="campo clave gemini" class="campo texto" placeholder="Pegue aqui su clave de Gemini">
+      <label for="campo clave claude" class="etiqueta campo">Clave privada de Claude</label>
+      <input type="password" id="campo clave claude" class="campo texto" placeholder="Pegue aqui su clave de Claude">
+      <button class="boton accion boton guardar" id="boton guardar claves">Guardar claves</button>
     </div>
 
     <div class="bloque contenido">
@@ -48,6 +60,7 @@
     </div>
   </div>
 
+  <script src="conexion modelos.js"></script>
   <script src="recorte visual.js"></script>
   <script src="captura ventana.js"></script>
   <script src="enrutador logico.js"></script>

@@ -22,6 +22,49 @@ body.fondo.aplicacion {
   margin-bottom: 14px;
 }
 
+.zona.estado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boton.icono {
+  background-color: #ffffff14;
+  border: 1px solid #ffffff26;
+  color: #94a3b8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.boton.icono:hover {
+  background-color: #ffffff26;
+  color: #ffffff;
+}
+
+.bloque.ajustes {
+  display: none;
+  background-color: #020617d9;
+  border: 1px solid #ffffff1a;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.boton.guardar {
+  background-color: #10b981;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.boton.guardar:hover {
+  background-color: #059669;
+}
+
 .etiqueta.estado {
   background-color: #10b98133;
   color: #34d399;
@@ -93,6 +136,9 @@ body.fondo.aplicacion {
   color: #f8fafc;
   font-size: 13px;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
 }
 
 .campo.texto:focus {
@@ -104,6 +150,7 @@ body.fondo.aplicacion {
   color: #ffffff;
   padding: 8px 16px;
   flex: none;
+  height: 38px;
 }
 
 .boton.enviar:hover {

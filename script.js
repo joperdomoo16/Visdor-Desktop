@@ -16,6 +16,16 @@ const moduloInterfaz = {
     bloque.style.display = "block";
     const campo = document.getElementById("campo consulta");
     campo.focus();
+  },
+  "alternar panel ajustes": function () {
+    const panel = document.getElementById("area ajustes");
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+      document.getElementById("campo clave gemini").value = moduloConexion["obtener clave gemini"]();
+      document.getElementById("campo clave claude").value = moduloConexion["obtener clave claude"]();
+    }
   }
 };
 
@@ -31,6 +41,20 @@ const botonCaptura = document.getElementById("boton capturar");
 const botonCopiar = document.getElementById("boton copiar");
 const botonConsultar = document.getElementById("boton consultar");
 const campoConsulta = document.getElementById("campo consulta");
+const botonAjustes = document.getElementById("boton panel ajustes");
+const botonGuardarClaves = document.getElementById("boton guardar claves");
+
+botonAjustes.addEventListener("click", function () {
+  moduloInterfaz["alternar panel ajustes"]();
+});
+
+botonGuardarClaves.addEventListener("click", function () {
+  const claveGemini = document.getElementById("campo clave gemini").value.trim();
+  const claveClaude = document.getElementById("campo clave claude").value.trim();
+  moduloConexion["guardar claves"](claveGemini, claveClaude);
+  moduloInterfaz["mostrar estado"]("Claves guardadas con exito");
+  moduloInterfaz["alternar panel ajustes"]();
+});
 
 botonCaptura.addEventListener("click", function () {
   moduloCaptura["capturar ventana"]();

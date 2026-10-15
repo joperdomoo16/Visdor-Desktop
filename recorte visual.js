@@ -56,5 +56,27 @@ const moduloRecorte = {
       moduloInterfaz["mostrar estado"]("Recuadro seleccionado");
       moduloInterfaz["mostrar orientacion"]("Escriba su consulta sobre el recuadro elegido");
     };
+  },
+  "obtener recorte imagen": function () {
+    const lienzo = document.getElementById("lienzo seleccion");
+    if (!moduloRecorte["recorte Listo"]) {
+      return lienzo.toDataURL("image/jpeg", 0.7);
+    }
+
+    const origenHorizontal = Math.min(moduloRecorte["inicio Horizontal"], moduloRecorte["fin Horizontal"]);
+    const origenVertical = Math.min(moduloRecorte["inicio Vertical"], moduloRecorte["fin Vertical"]);
+    const anchoZona = Math.abs(moduloRecorte["fin Horizontal"] - moduloRecorte["inicio Horizontal"]);
+    const altoZona = Math.abs(moduloRecorte["fin Vertical"] - moduloRecorte["inicio Vertical"]);
+
+    if (anchoZona < 10 || altoZona < 10) {
+      return lienzo.toDataURL("image/jpeg", 0.7);
+    }
+
+    const lienzoRecorte = document.createElement("canvas");
+    lienzoRecorte.width = anchoZona;
+    lienzoRecorte.height = altoZona;
+    const contextoRecorte = lienzoRecorte.getContext("2d");
+    contextoRecorte.drawImage(lienzo, origenHorizontal, origenVertical, anchoZona, altoZona, 0, 0, anchoZona, altoZona);
+    return lienzoRecorte.toDataURL("image/jpeg", 0.7);
   }
 };
