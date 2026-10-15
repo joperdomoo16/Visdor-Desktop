@@ -2,7 +2,7 @@
   "name": "visor-desktop",
   "version": "1.0.0",
   "description": "Asistente visual ligero para computador",
-  "main": "principal ventana.js",
+  "main": "logica/principal ventana.js",
   "scripts": {
     "iniciar": "electron .",
     "compilar": "electron-builder -w"

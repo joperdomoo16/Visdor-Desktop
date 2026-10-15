@@ -1,22 +1,12 @@
 const moduloConexion = {
-  "obtener clave gemini": function () {
-    return localStorage.getItem("clave privada gemini") || "";
-  },
-  "obtener clave claude": function () {
-    return localStorage.getItem("clave privada claude") || "";
-  },
-  "guardar claves": function (claveGemini, claveClaude) {
-    localStorage.setItem("clave privada gemini", claveGemini);
-    localStorage.setItem("clave privada claude", claveClaude);
-  },
   "consultar gemini": async function (pregunta, imagenRecortada) {
-    const clave = moduloConexion["obtener clave gemini"]();
+    const clave = moduloAlmacenamiento["obtener clave gemini"]();
     if (!clave) {
       return null;
     }
 
     const direccion = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + clave;
-    const partes = [{ text: "Analiza la imagen recortada de la pantalla del computador y responde la siguiente pregunta del usuario: " + pregunta }];
+    const partes = [{ text: "Analiza la imagen de la pantalla del computador y responde la siguiente consulta: " + pregunta }];
 
     if (imagenRecortada) {
       const datosPuros = imagenRecortada.split(",")[1];
@@ -35,14 +25,14 @@ const moduloConexion = {
     });
 
     if (!respuesta.ok) {
-      throw new Error("Falla en la comunicacion con Gemini");
+      throw new Error("Falla en la comunicación con Gemini");
     }
 
     const resultado = await respuesta.json();
     return resultado.candidates[0].content.parts[0].text;
   },
   "consultar claude": async function (pregunta, contextoAdicional) {
-    const clave = moduloConexion["obtener clave claude"]();
+    const clave = moduloAlmacenamiento["obtener clave claude"]();
     if (!clave) {
       return null;
     }
@@ -52,7 +42,7 @@ const moduloConexion = {
       model: "claude-3-5-sonnet-20241022",
       messages: [{
         role: "user",
-        content: "Contexto de la pantalla: " + contextoAdicional + "\nPregunta del usuario: " + pregunta
+        content: "Contexto visual: " + contextoAdicional + "\nConsulta técnica: " + pregunta
       }]
     };
 
@@ -71,7 +61,7 @@ const moduloConexion = {
     });
 
     if (!respuesta.ok) {
-      throw new Error("Falla en la comunicacion con Claude");
+      throw new Error("Falla en la comunicación con Claude");
     }
 
     const resultado = await respuesta.json();

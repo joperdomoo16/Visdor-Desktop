@@ -4,33 +4,36 @@ Asistente visual ligero para computador que analiza la ventana activa y entrega 
 
 ## Descripción
 
-Visor Desktop es una aplicación de escritorio diseñada para asistir al usuario mientras trabaja en su computador. Cuenta con protección activa para permanecer completamente invisible al compartir pantalla en llamadas de Teams, Zoom, Meet o cualquier otra aplicación, y dispone de un filtro local de privacidad para evitar el envío de datos sensibles o bancarios.
+Visor Desktop es una aplicación de escritorio diseñada para asistir al usuario mientras trabaja en su computador. Cuenta con modo de diálogo en vivo mediante escucha continua por voz, monitoreo de pantalla en tiempo real y personalización guiada de estilo para que la inteligencia artificial responda con su propia manera de hablar y argumentar.
 
 ## Estructura del proyecto
 
-El aplicativo se compone de los siguientes archivos:
+El aplicativo se organiza siguiendo una arquitectura modular con separación estricta de responsabilidades:
 
-- filtro privacidad.js: Módulo de protección local contra filtraciones de contraseñas y datos bancarios.
-- principal ventana.js: Proceso de escritorio con ventana protegida contra capturas y atajo global de teclado.
+- index.html: Punto de entrada principal en la raíz con estructura base y enlaces de carga.
 - package.json: Definición de comandos de ejecución y empaquetado del archivo ejecutable.
-- index.html: Interfaz del visor flotante con enlace oficial a Bootstrap, panel de ajustes e indicador de protección.
-- style.css: Hoja de estilos moderna, oscura y translúcida, empleando fuentes del sistema operativo.
-- conexion modelos.js: Módulo de conexión directa con las interfaces de Gemini y Claude.
-- recorte visual.js: Módulo de selección interactiva y recorte por recuadro sobre la pantalla.
-- captura ventana.js: Módulo de captura visual en memoria de la ventana activa.
-- enrutador logico.js: Módulo de evaluación de complejidad y atención de consultas en vivo.
-- historial local.js: Módulo de registro y recuperación de análisis previos en el computador.
-- script.js: Orquestador de la interfaz, eventos de teclado, cuadro de preguntas y portapapeles.
-- readme.md: Documentación del proyecto.
+- readme.md: Documentación y guía del proyecto.
+- estilos/style.css: Hoja de estilo global con colores, márgenes y diseño translúcido.
+- recursos/: Carpeta para almacenamiento de imágenes, iconos y documentos estáticos.
+- logica/datos inicial.js: Arreglos base, preguntas de calibración y registros de prueba iniciales.
+- logica/almacenamiento.js: Módulo exclusivo para lectura y persistencia local sin acceso visual.
+- logica/validaciones.js: Reglas de verificación de campos, formatos y longitud de consultas.
+- logica/filtro privacidad.js: Módulo de protección local contra filtraciones de contraseñas y datos bancarios.
+- logica/conexion modelos.js: Módulo de conexión directa con las interfaces de Gemini y Claude.
+- logica/personalizacion estilo.js: Módulo de calibración de tono y argumentación a partir de respuestas de audio.
+- logica/captura ventana.js: Módulo de captura visual en memoria y fotogramas automáticos por voz.
+- logica/recorte visual.js: Módulo de selección interactiva y recorte por recuadro sobre la pantalla.
+- logica/escucha en vivo.js: Módulo de detección de preguntas por voz mediante micrófono en vivo.
+- logica/enrutador logico.js: Módulo de evaluación de complejidad y personalización de respuestas.
+- logica/interfaz.js: Módulo de manipulación exclusiva del árbol de elementos y renderizado visual.
+- logica/script.js: Controlador principal que inicializa la vista y conecta eventos de usuario.
+- logica/principal ventana.js: Proceso de escritorio con ventana protegida contra capturas y atajo global de teclado.
 
 ## Uso del aplicativo
 
 - Iniciar la aplicación de escritorio ejecutando el comando npm run iniciar.
-- La ventana flotará de forma permanente y permanecerá invisible si usted comparte pantalla en videollamadas.
+- Dar clic en Mi estilo para responder con su voz las preguntas de calibración y ajustar su forma de argumentar.
+- Dar clic en Iniciar diálogo para activar el monitoreo continuo con escucha en vivo.
+- Al hacer una pregunta en voz alta, el visor tomará automáticamente lo que se ve en pantalla y responderá guiado por la imagen y con su tono personalizado.
 - Dar clic en Ajustes para ingresar sus credenciales de Gemini y Claude.
-- Presionar la combinación Alt y Espacio en cualquier programa para iniciar la captura de pantalla.
-- Arrastrar el ratón sobre la imagen para delimitar el recuadro que se desea consultar.
-- Escribir la pregunta técnica en el cuadro de texto y presionar la tecla Enter o dar clic en Consultar.
-- El visor procesará la consulta con Gemini y escalará a Claude cuando la complejidad sea alta.
-- Dar clic en Copiar solución para pasar el texto al portapapeles del computador.
 - Para generar el archivo ejecutable portable para Windows, ejecutar el comando npm run compilar.

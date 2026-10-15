@@ -1,0 +1,1 @@
+Carpeta destinada al almacenamiento de recursos visuales, logotipos, iconos y documentos estaticos del proyecto.

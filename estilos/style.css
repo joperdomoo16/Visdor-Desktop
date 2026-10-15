@@ -13,7 +13,7 @@ body.fondo.aplicacion {
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 10px 25px #00000080;
-  max-width: 480px;
+  max-width: 500px;
 }
 
 .bloque.cabecera {
@@ -27,7 +27,8 @@ body.fondo.aplicacion {
 .zona.estado {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .zona.controles {
@@ -83,6 +84,66 @@ body.fondo.aplicacion {
   font-weight: 600;
 }
 
+.etiqueta.escucha {
+  background-color: #64748b33;
+  color: #94a3b8;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.etiqueta.escucha.activa {
+  background-color: #ef444433;
+  color: #f87171;
+  border: 1px solid #ef444480;
+}
+
+.tarjeta.pregunta.estilo {
+  background-color: #02061799;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.titulo.pregunta {
+  font-size: 12px;
+  color: #e2e8f0;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.boton.microfono {
+  background-color: #8b5cf6;
+  color: #ffffff;
+  padding: 6px 12px;
+  font-size: 11px;
+  width: 100%;
+}
+
+.boton.microfono:hover {
+  background-color: #7c3aed;
+}
+
+.texto.resultado.muestra {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 6px 0 0 0;
+  font-style: italic;
+}
+
+.boton.dialogo {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.boton.dialogo:hover {
+  background-color: #047857;
+}
+
 .bloque.ajustes {
   display: none;
   background-color: #020617d9;
@@ -90,6 +151,8 @@ body.fondo.aplicacion {
   border-radius: 10px;
   padding: 14px;
   margin-bottom: 14px;
+  max-height: 280px;
+  overflow-y: auto;
 }
 
 .boton.guardar {
@@ -285,7 +348,7 @@ body.fondo.aplicacion {
 
 .bloque.acciones {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-top: 14px;
 }
 
@@ -294,7 +357,7 @@ body.fondo.aplicacion {
   border: none;
   border-radius: 8px;
   padding: 10px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;

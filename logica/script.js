@@ -1,49 +1,36 @@
-const moduloInterfaz = {
-  "mostrar estado": function (mensaje) {
-    const etiqueta = document.getElementById("estado visor");
-    etiqueta.textContent = mensaje;
-  },
-  "mostrar resultado": function (texto) {
-    const caja = document.getElementById("texto prediccion");
-    caja.textContent = texto;
-  },
-  "mostrar orientacion": function (indicacion) {
-    const elemento = document.getElementById("texto orientacion");
-    elemento.textContent = indicacion;
-  },
-  "mostrar campo pregunta": function () {
-    const bloque = document.getElementById("area pregunta");
-    bloque.style.display = "block";
-    const campo = document.getElementById("campo consulta");
-    campo.focus();
-  },
-  "alternar panel ajustes": function () {
-    const panel = document.getElementById("area ajustes");
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-      document.getElementById("campo clave gemini").value = moduloConexion["obtener clave gemini"]();
-      document.getElementById("campo clave claude").value = moduloConexion["obtener clave claude"]();
-    }
-  }
-};
-
-const moduloPortapapeles = {
-  "copiar al sistema": function () {
-    const caja = document.getElementById("texto prediccion");
-    navigator.clipboard.writeText(caja.textContent);
-    moduloInterfaz["mostrar estado"]("Copiado con exito");
-  }
-};
-
 const botonCaptura = document.getElementById("boton capturar");
 const botonCopiar = document.getElementById("boton copiar");
 const botonConsultar = document.getElementById("boton consultar");
 const campoConsulta = document.getElementById("campo consulta");
 const botonAjustes = document.getElementById("boton panel ajustes");
+const botonPersonalizacion = document.getElementById("boton panel personalizacion");
 const botonGuardarClaves = document.getElementById("boton guardar claves");
 const botonCerrar = document.getElementById("boton cerrar ventana");
+const botonAlternarDialogo = document.getElementById("boton alternar dialogo");
+
+const botonVozPrimera = document.getElementById("boton voz primera");
+const botonVozSegunda = document.getElementById("boton voz segunda");
+const botonVozTercera = document.getElementById("boton voz tercera");
+
+botonVozPrimera.addEventListener("click", function () {
+  moduloPersonalizacion["grabar respuesta voz"]("primera");
+});
+
+botonVozSegunda.addEventListener("click", function () {
+  moduloPersonalizacion["grabar respuesta voz"]("segunda");
+});
+
+botonVozTercera.addEventListener("click", function () {
+  moduloPersonalizacion["grabar respuesta voz"]("tercera");
+});
+
+botonAlternarDialogo.addEventListener("click", function () {
+  if (moduloEscucha["activo"]) {
+    moduloEscucha["detener escucha"]();
+  } else {
+    moduloEscucha["iniciar escucha"]();
+  }
+});
 
 botonCerrar.addEventListener("click", function () {
   window.close();
@@ -53,11 +40,15 @@ botonAjustes.addEventListener("click", function () {
   moduloInterfaz["alternar panel ajustes"]();
 });
 
+botonPersonalizacion.addEventListener("click", function () {
+  moduloInterfaz["alternar panel personalizacion"]();
+});
+
 botonGuardarClaves.addEventListener("click", function () {
   const claveGemini = document.getElementById("campo clave gemini").value.trim();
   const claveClaude = document.getElementById("campo clave claude").value.trim();
-  moduloConexion["guardar claves"](claveGemini, claveClaude);
-  moduloInterfaz["mostrar estado"]("Claves guardadas con exito");
+  moduloAlmacenamiento["guardar claves"](claveGemini, claveClaude);
+  moduloInterfaz["mostrar estado"]("Claves guardadas con éxito");
   moduloInterfaz["alternar panel ajustes"]();
 });
 
@@ -66,17 +57,17 @@ botonCaptura.addEventListener("click", function () {
 });
 
 botonCopiar.addEventListener("click", function () {
-  moduloPortapapeles["copiar al sistema"]();
+  moduloInterfaz["copiar solucion al portapapeles"]();
 });
 
 botonConsultar.addEventListener("click", function () {
   const pregunta = campoConsulta.value.trim();
-  if (pregunta.length === 0) {
+  if (!moduloValidaciones["validar texto no vacio"](pregunta)) {
     moduloInterfaz["mostrar estado"]("Escriba una pregunta para continuar");
     return;
   }
   moduloEnrutador["procesar consulta"](pregunta);
-  campoConsulta.value = "";
+  moduloInterfaz["limpiar campo consulta"]();
 });
 
 campoConsulta.addEventListener("keydown", function (evento) {
@@ -101,4 +92,4 @@ try {
   // Entorno sin ipc activo
 }
 
-moduloHistorial["dibujar listado"]();
+moduloInterfaz["renderizar historial"]();
