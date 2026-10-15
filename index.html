@@ -16,8 +16,13 @@
 
     <div class="bloque contenido">
       <div class="texto ayuda">
-        De clic en el boton para capturar la ventana activa en este computador o consultar la prediccion.
+        De clic en el boton o presione Alt y Espacio para capturar la ventana activa en este computador.
       </div>
+
+      <div class="bloque visual" id="area visual">
+        <video id="lienzo video" class="vista previa" autoplay muted playsinline></video>
+      </div>
+
       <div class="caja respuesta" id="caja solucion">
         <p class="texto resultado" id="texto prediccion">Esperando orden de captura del usuario.</p>
       </div>
@@ -29,6 +34,8 @@
     </div>
   </div>
 
+  <script src="captura ventana.js"></script>
+  <script src="enrutador logico.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

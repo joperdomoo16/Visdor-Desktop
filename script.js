@@ -6,6 +6,12 @@ const moduloInterfaz = {
   "mostrar resultado": function (texto) {
     const caja = document.getElementById("texto prediccion");
     caja.textContent = texto;
+  },
+  "activar vista previa": function (flujo) {
+    const area = document.getElementById("area visual");
+    const video = document.getElementById("lienzo video");
+    area.style.display = "block";
+    video.srcObject = flujo;
   }
 };
 
@@ -14,34 +20,6 @@ const moduloPortapapeles = {
     const caja = document.getElementById("texto prediccion");
     navigator.clipboard.writeText(caja.textContent);
     moduloInterfaz["mostrar estado"]("Copiado con exito");
-  }
-};
-
-const moduloEnrutador = {
-  "evaluar complejidad": function (texto) {
-    if (texto.length > 80) {
-      return "alta";
-    }
-    return "baja";
-  },
-  "procesar consulta": function () {
-    moduloInterfaz["mostrar estado"]("Analizando con modelo rapido");
-    const diagnostico = "Recibo y cedula verificados en Bogota para el año en curso. El valor en pesos coincide con la factura del cliente.";
-    const dificultad = moduloEnrutador["evaluar complejidad"](diagnostico);
-
-    if (dificultad === "alta") {
-      moduloInterfaz["mostrar estado"]("Escalando a solucion profunda");
-    }
-
-    moduloInterfaz["mostrar resultado"](diagnostico);
-    moduloInterfaz["mostrar estado"]("Solucion lista");
-  }
-};
-
-const moduloCaptura = {
-  "capturar ventana": function () {
-    moduloInterfaz["mostrar estado"]("Obteniendo ventana activa");
-    moduloEnrutador["procesar consulta"]();
   }
 };
 
@@ -54,4 +32,11 @@ botonCaptura.addEventListener("click", function () {
 
 botonCopiar.addEventListener("click", function () {
   moduloPortapapeles["copiar al sistema"]();
+});
+
+document.addEventListener("keydown", function (evento) {
+  if (evento.code === "Space" && evento.altKey) {
+    evento.preventDefault();
+    moduloCaptura["capturar ventana"]();
+  }
 });

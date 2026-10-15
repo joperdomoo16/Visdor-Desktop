@@ -47,6 +47,21 @@ body.fondo.aplicacion {
   line-height: 1.4;
 }
 
+.bloque.visual {
+  margin-bottom: 12px;
+  display: none;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ffffff14;
+}
+
+.vista.previa {
+  width: 100%;
+  max-height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
 .caja.respuesta {
   background-color: #020617b3;
   border: 1px solid #ffffff14;
