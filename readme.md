@@ -4,12 +4,13 @@ Asistente visual ligero para computador que analiza la ventana activa y entrega 
 
 ## Descripción
 
-Visor Desktop es una aplicación de escritorio diseñada para asistir al usuario mientras trabaja en su computador. Cuenta con protección activa para permanecer completamente invisible al compartir pantalla en llamadas de Teams, Zoom, Meet o cualquier otra aplicación, garantizando total privacidad.
+Visor Desktop es una aplicación de escritorio diseñada para asistir al usuario mientras trabaja en su computador. Cuenta con protección activa para permanecer completamente invisible al compartir pantalla en llamadas de Teams, Zoom, Meet o cualquier otra aplicación, y dispone de un filtro local de privacidad para evitar el envío de datos sensibles o bancarios.
 
 ## Estructura del proyecto
 
 El aplicativo se compone de los siguientes archivos:
 
+- filtro privacidad.js: Módulo de protección local contra filtraciones de contraseñas y datos bancarios.
 - principal ventana.js: Proceso de escritorio con ventana protegida contra capturas y atajo global de teclado.
 - package.json: Definición de comandos de ejecución y empaquetado del archivo ejecutable.
 - index.html: Interfaz del visor flotante con enlace oficial a Bootstrap, panel de ajustes e indicador de protección.

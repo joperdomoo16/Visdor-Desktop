@@ -201,7 +201,7 @@ body.fondo.aplicacion {
   border-radius: 8px;
   padding: 12px;
   min-height: 80px;
-  max-height: 160px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
@@ -211,6 +211,38 @@ body.fondo.aplicacion {
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.bloque.codigo {
+  background-color: #020617;
+  border: 1px solid #ffffff1a;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 8px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #38bdf8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.boton.copiar.codigo {
+  margin-top: 6px;
+  background-color: #38bdf826;
+  border: 1px solid #38bdf84d;
+  color: #38bdf8;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.boton.copiar.codigo:hover {
+  background-color: #38bdf84d;
+  color: #ffffff;
 }
 
 .bloque.historial {

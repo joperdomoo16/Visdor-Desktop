@@ -6,6 +6,12 @@ const moduloEnrutador = {
     return "baja";
   },
   "procesar consulta": async function (preguntaUsuario) {
+    if (moduloPrivacidad["verificar datos sensibles"](preguntaUsuario)) {
+      moduloInterfaz["mostrar estado"]("Pausado por proteccion de datos");
+      moduloInterfaz["mostrar resultado"]("Se detecto una consulta con datos sensibles o bancarios. El analisis se pausa automaticamente para preservar su privacidad.");
+      return;
+    }
+
     moduloInterfaz["mostrar estado"]("Procesando consulta");
     const imagenRecortada = moduloRecorte["obtener recorte imagen"]();
     const tieneClaves = moduloConexion["obtener clave gemini"]() || moduloConexion["obtener clave claude"]();
