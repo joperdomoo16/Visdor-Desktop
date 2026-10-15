@@ -2,7 +2,7 @@ const moduloCaptura = {
   "flujoActivo": null,
   "capturar ventana": async function () {
     try {
-      moduloInterfaz["mostrar estado"]("Seleccionando ventana del computador");
+      moduloInterfaz["mostrar estado"]("Seleccione una ventana", "Elija la pantalla o ventana del computador a capturar.", "punto azul");
       moduloCaptura["flujoActivo"] = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false
@@ -11,15 +11,22 @@ const moduloCaptura = {
       video.srcObject = moduloCaptura["flujoActivo"];
       video.onloadedmetadata = function () {
         video.play();
-        const area = document.getElementById("area visual");
         const lienzo = document.getElementById("lienzo seleccion");
-        area.style.display = "block";
+        moduloInterfaz["mostrar captura"](true);
         moduloRecorte["iniciar seleccion"](lienzo, video);
-        moduloInterfaz["mostrar orientacion"]("Arrastre el ratón sobre la imagen para seleccionar el recuadro");
+        moduloInterfaz["mostrar estado"]("Seleccione una zona", "Arrastre sobre la imagen para marcar el recuadro que quiere consultar.", "punto azul");
       };
     } catch (error) {
-      moduloInterfaz["mostrar estado"]("Captura cancelada");
+      moduloInterfaz["mostrar captura"](false);
+      moduloInterfaz["mostrar estado"]("Listo", "Inicie un diálogo para preguntar en voz alta o capture una zona de la pantalla.", "punto verde");
     }
+  },
+  "cancelar captura": function () {
+    moduloInterfaz["mostrar captura"](false);
+    moduloInterfaz["mostrar campo pregunta captura"](false);
+    moduloInterfaz["limpiar campo consulta"]();
+    moduloRecorte["recorte Listo"] = false;
+    moduloInterfaz["mostrar estado"]("Listo", "Inicie un diálogo para preguntar en voz alta o capture una zona de la pantalla.", "punto verde");
   },
   "capturar fotograma instantaneo": async function (alCompletar) {
     if (!moduloCaptura["flujoActivo"]) {
@@ -32,7 +39,7 @@ const moduloCaptura = {
         video.srcObject = moduloCaptura["flujoActivo"];
         await video.play();
       } catch (error) {
-        moduloInterfaz["mostrar estado"]("Se requiere permiso de pantalla para el modo diálogo");
+        moduloInterfaz["mostrar estado"]("Permiso requerido", "Se requiere permiso de pantalla para analizar lo que se ve.", "punto rojo");
         return;
       }
     }

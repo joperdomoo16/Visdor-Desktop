@@ -6,6 +6,7 @@ const moduloRecorte = {
   "fin Vertical": 0,
   "recorte Listo": false,
   "imagen Base": null,
+
   "iniciar seleccion": function (lienzo, video) {
     const contexto = lienzo.getContext("2d");
     lienzo.width = video.videoWidth || 640;
@@ -52,11 +53,11 @@ const moduloRecorte = {
       }
       moduloRecorte["seleccion activa"] = false;
       moduloRecorte["recorte Listo"] = true;
-      moduloInterfaz["mostrar campo pregunta"]();
-      moduloInterfaz["mostrar estado"]("Recuadro seleccionado");
-      moduloInterfaz["mostrar orientacion"]("Escriba su consulta sobre el recuadro elegido");
+      moduloInterfaz["mostrar campo pregunta captura"](true);
+      moduloInterfaz["mostrar estado"]("Zona seleccionada", "Escriba su pregunta y pulse Enter.", "punto azul");
     };
   },
+
   "obtener recorte imagen": function () {
     const lienzo = document.getElementById("lienzo seleccion");
     if (!moduloRecorte["recorte Listo"]) {

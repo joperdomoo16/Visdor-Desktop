@@ -4,7 +4,7 @@ const moduloEscucha = {
   "iniciar escucha": function () {
     const ReconocimientoVoz = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!ReconocimientoVoz) {
-      moduloInterfaz["mostrar estado"]("Micrófono no compatible en este navegador");
+      moduloInterfaz["mostrar estado"]("Micrófono no compatible", "Su navegador o sistema no soporta el reconocimiento de voz.", "punto rojo");
       return;
     }
 
@@ -18,15 +18,17 @@ const moduloEscucha = {
       const textoHablado = evento.results[indiceUltimo][0].transcript.trim();
 
       if (textoHablado.length > 3) {
-        moduloInterfaz["mostrar estado"]("Pregunta detectada por voz: " + textoHablado);
+        const elementoRespuesta = moduloInterfaz["agregar mensaje vivo"](textoHablado, "voz", null, false);
         moduloCaptura["capturar fotograma instantaneo"](function () {
-          moduloEnrutador["procesar consulta"](textoHablado);
+          moduloEnrutador["procesar consulta vivo"](textoHablado, elementoRespuesta);
         });
       }
     };
 
     moduloEscucha["reconocedor"].onerror = function () {
-      moduloInterfaz["mostrar estado"]("Reanudando escucha de voz");
+      if (moduloEscucha["activo"]) {
+        moduloInterfaz["mostrar estado"]("Reanudando escucha", "Restableciendo micrófono en vivo.", "punto rojo");
+      }
     };
 
     moduloEscucha["reconocedor"].onend = function () {
@@ -34,7 +36,7 @@ const moduloEscucha = {
         try {
           moduloEscucha["reconocedor"].start();
         } catch (error) {
-          // Reintento silencioso de conexion
+          // Reintento silencioso
         }
       }
     };
@@ -42,18 +44,22 @@ const moduloEscucha = {
     try {
       moduloEscucha["reconocedor"].start();
       moduloEscucha["activo"] = true;
-      moduloInterfaz["mostrar estado"]("Modo diálogo activo y escuchando");
-      moduloInterfaz["activar indicador escucha"](true);
+      moduloInterfaz["mostrar conversacion vivo"](true);
+      moduloInterfaz["mostrar estado"]("Modo en vivo activo", "Cada pregunta detectada se transcribe y se responde con una imagen de la pantalla.", "punto rojo");
     } catch (error) {
-      moduloInterfaz["mostrar estado"]("Falla al encender micrófono");
+      moduloInterfaz["mostrar estado"]("Falla de micrófono", "No fue posible acceder al micrófono del computador.", "punto rojo");
     }
   },
   "detener escucha": function () {
     moduloEscucha["activo"] = false;
     if (moduloEscucha["reconocedor"]) {
-      moduloEscucha["reconocedor"].stop();
+      try {
+        moduloEscucha["reconocedor"].stop();
+      } catch (error) {
+        // Cierre silencioso
+      }
     }
-    moduloInterfaz["activar indicador escucha"](false);
-    moduloInterfaz["mostrar estado"]("Modo diálogo pausado");
+    moduloInterfaz["mostrar conversacion vivo"](false);
+    moduloInterfaz["mostrar estado"]("Listo", "Inicie un diálogo para preguntar en voz alta o capture una zona de la pantalla.", "punto verde");
   }
 };

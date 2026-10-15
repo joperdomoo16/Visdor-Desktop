@@ -4,90 +4,199 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visor Desktop</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="estilos/style.css">
 </head>
 <body class="fondo aplicacion">
   <div class="tarjeta flotante" id="visor principal">
-    <div class="bloque cabecera" id="barra arrastre">
-      <div class="zona estado">
-        <span class="etiqueta estado" id="estado visor">Listo para captura</span>
-        <span class="etiqueta proteccion">Oculto en transmisión</span>
-        <span class="etiqueta escucha" id="indicador escucha">Modo diálogo inactivo</span>
-        <span class="etiqueta ciudad">Bogotá</span>
+    <header class="bloque cabecera" id="barra arrastre">
+      <div class="cabecera navegacion" id="cabecera principal">
+        <span class="titulo visor">Visor</span>
+        <span class="etiqueta proteccion" id="distintivo proteccion">Oculto en transmisión</span>
+        <span class="espaciador cabecera"></span>
+        <button class="boton icono ajustes" id="boton abrir ajustes">Ajustes</button>
+        <button class="boton cerrar" id="boton cerrar ventana">×</button>
       </div>
-      <div class="zona controles">
-        <button class="boton icono" id="boton panel personalizacion">Mi estilo</button>
-        <button class="boton icono" id="boton panel ajustes">Ajustes</button>
-        <button class="boton cerrar" id="boton cerrar ventana">x</button>
+      <div class="cabecera navegacion cabecera oculta" id="cabecera ajustes">
+        <button class="boton volver" id="boton volver principal">← Volver</button>
+        <span class="titulo ajustes cabecera">Ajustes</span>
+        <button class="boton cerrar" id="boton cerrar ajustes">×</button>
       </div>
-    </div>
+    </header>
 
-    <div class="bloque ajustes" id="area personalizacion">
-      <span class="etiqueta seccion">Personalizar estilo de respuesta</span>
-      <p class="texto ayuda">Responda estas preguntas con su voz para que el asistente aprenda su manera de argumentar y hablar.</p>
-      
-      <div class="tarjeta pregunta estilo">
-        <span class="titulo pregunta">¿Cómo explica un cobro en pesos a un cliente cuando surge un reclamo?</span>
-        <button class="boton accion boton microfono" id="boton voz primera">Grabar audio de respuesta</button>
-        <p class="texto resultado muestra" id="muestra respuesta primera">Sin audio grabado aún.</p>
-      </div>
-
-      <div class="tarjeta pregunta estilo">
-        <span class="titulo pregunta">¿Cómo le describe un error técnico a un compañero de trabajo de forma rápida?</span>
-        <button class="boton accion boton microfono" id="boton voz segunda">Grabar audio de respuesta</button>
-        <p class="texto resultado muestra" id="muestra respuesta segunda">Sin audio grabado aún.</p>
-      </div>
-
-      <div class="tarjeta pregunta estilo">
-        <span class="titulo pregunta">¿Cuál es su manera habitual de argumentar para ir al grano?</span>
-        <button class="boton accion boton microfono" id="boton voz tercera">Grabar audio de respuesta</button>
-        <p class="texto resultado muestra" id="muestra respuesta tercera">Sin audio grabado aún.</p>
-      </div>
-    </div>
-
-    <div class="bloque ajustes" id="area ajustes">
-      <span class="etiqueta seccion">Claves de inteligencia artificial</span>
-      <label for="campo clave gemini" class="etiqueta campo">Clave privada de Gemini</label>
-      <input type="password" id="campo clave gemini" class="campo texto" placeholder="Pegue aquí su clave de Gemini">
-      <label for="campo clave claude" class="etiqueta campo">Clave privada de Claude</label>
-      <input type="password" id="campo clave claude" class="campo texto" placeholder="Pegue aquí su clave de Claude">
-      <button class="boton accion boton guardar" id="boton guardar claves">Guardar claves</button>
-    </div>
-
-    <div class="bloque contenido">
-      <div class="texto ayuda" id="texto orientacion">
-        Dé clic en Iniciar diálogo para monitoreo continuo con escucha o capture la ventana activa.
-      </div>
-
-      <div class="bloque visual" id="area visual">
-        <video id="lienzo video" class="vista oculta" autoplay muted playsinline></video>
-        <canvas id="lienzo seleccion" class="lienzo interactivo"></canvas>
-      </div>
-
-      <div class="bloque pregunta" id="area pregunta">
-        <label for="campo consulta" class="etiqueta campo">Pregunta sobre el recuadro seleccionado</label>
-        <div class="fila entrada">
-          <input type="text" id="campo consulta" class="campo texto" placeholder="Escriba su consulta aquí">
-          <button class="boton accion boton enviar" id="boton consultar">Consultar</button>
+    <main class="cuerpo principal" id="vista principal">
+      <div class="bloque estado">
+        <div class="zona punto">
+          <span class="punto indicador punto verde" id="punto estado"></span>
+        </div>
+        <div class="textos estado">
+          <div class="titulo estado" id="titulo estado">Listo</div>
+          <div class="subtitulo estado" id="subtitulo estado">Inicie un diálogo para preguntar en voz alta o capture una zona de la pantalla.</div>
         </div>
       </div>
 
-      <div class="caja respuesta" id="caja solucion">
-        <div class="texto resultado" id="texto prediccion">Esperando orden de captura o pregunta de voz.</div>
+      <div class="bloque captura" id="bloque captura">
+        <div class="caja captura" id="caja captura">
+          <video id="lienzo video" class="vista oculta" autoplay muted playsinline></video>
+          <canvas id="lienzo seleccion" class="lienzo interactivo"></canvas>
+          <span class="texto captura activa">captura de la ventana activa</span>
+          <div class="recuadro seleccion" id="recuadro seleccion"></div>
+        </div>
+        <div class="fila consulta captura" id="fila consulta captura">
+          <input type="text" id="campo consulta" class="campo texto" placeholder="¿Qué quiere saber de esta zona?">
+          <button class="boton consultar" id="boton consultar">Consultar</button>
+        </div>
+        <button class="boton cancelar captura" id="boton cancelar captura">Cancelar captura</button>
       </div>
 
-      <div class="bloque historial">
-        <span class="etiqueta seccion">Historial reciente</span>
-        <div class="caja historial" id="listado historial"></div>
+      <div class="bloque conversacion" id="bloque conversacion">
+        <div class="cabecera conversacion">
+          <span class="titulo conversacion">Conversación en vivo</span>
+          <span class="etiqueta microfono">micrófono activo</span>
+        </div>
+        <div class="caja mensajes" id="caja mensajes vivo">
+          <div class="mensaje vacio" id="mensaje vacio vivo">Haga su pregunta en voz alta. Aquí verá la transcripción y la respuesta.</div>
+        </div>
+        <div class="fila entrada conversacion">
+          <input type="text" id="campo entrada vivo" class="campo texto campo texto conversacion" placeholder="¿No se detectó? Escriba su pregunta">
+          <button class="boton enviar conversacion" id="boton enviar vivo">Enviar</button>
+        </div>
       </div>
-    </div>
 
-    <div class="bloque acciones">
-      <button class="boton accion boton dialogo" id="boton alternar dialogo">Iniciar diálogo</button>
-      <button class="boton accion boton captura" id="boton capturar">Capturar pantalla</button>
-      <button class="boton accion boton copiar" id="boton copiar">Copiar solución</button>
-    </div>
+      <div class="bloque respuesta" id="bloque respuesta">
+        <div class="texto pregunta previa" id="contenedor pregunta previa">Pregunta: <span class="texto pregunta resaltado" id="texto pregunta previa"></span></div>
+        <div class="caja texto solucion" id="caja texto solucion"></div>
+        <div class="fila acciones respuesta">
+          <button class="boton copiar solucion" id="boton copiar">Copiar respuesta</button>
+          <button class="boton descartar solucion" id="boton descartar">Descartar</button>
+        </div>
+      </div>
+
+      <div class="bloque botones principales" id="bloque botones principales">
+        <button class="boton dialogo vivo" id="boton alternar dialogo">Iniciar modo en vivo</button>
+        <button class="boton captura pantalla" id="boton capturar">Capturar pantalla</button>
+      </div>
+
+      <div class="pie atajos">
+        <span>Respuestas por voz al instante</span>
+        <span>Alt + Espacio</span>
+      </div>
+    </main>
+
+    <section class="vista ajustes" id="vista ajustes">
+      <nav class="barra pestanas" id="barra pestanas">
+        <button class="boton pestana pestana activa" id="pestana estilo" data-pestana="estilo">Mi estilo</button>
+        <button class="boton pestana" id="pestana claves" data-pestana="claves">Claves</button>
+        <button class="boton pestana" id="pestana historial" data-pestana="historial">Historial</button>
+        <button class="boton pestana" id="pestana general" data-pestana="general">General</button>
+      </nav>
+
+      <div class="cuerpo ajustes">
+        <div class="panel pestana" id="panel estilo">
+          <div class="fila conmutador">
+            <div class="textos conmutador">
+              <span class="titulo conmutador">Usar mi estilo</span>
+              <span class="subtitulo conmutador" id="subtitulo estilo">Las respuestas siguen su manera de hablar.</span>
+            </div>
+            <button class="boton interruptor interruptor activo" id="conmutador estilo">
+              <span class="circulo interruptor"></span>
+            </button>
+          </div>
+          <p class="parrafo orientacion">Responda con su voz para que el asistente aprenda su manera de argumentar y hablar.</p>
+          <div class="alerta exito" id="alerta estilo calibrado">Estilo calibrado. Se aplicará a todas las respuestas.</div>
+
+          <div class="tarjeta pregunta estilo">
+            <div class="encabezado pregunta">
+              <span class="numero pregunta">primera</span>
+              <span class="texto pregunta estilo">¿Cómo explica un cobro en pesos a un cliente cuando surge un reclamo?</span>
+            </div>
+            <div class="fila accion grabacion">
+              <button class="boton microfono estilo" id="boton voz primera">Grabar respuesta</button>
+              <span class="texto muestra audio" id="muestra respuesta primera">Sin audio grabado aún.</span>
+            </div>
+          </div>
+
+          <div class="tarjeta pregunta estilo">
+            <div class="encabezado pregunta">
+              <span class="numero pregunta">segunda</span>
+              <span class="texto pregunta estilo">¿Cómo le describe un error técnico a un compañero de trabajo de forma rápida?</span>
+            </div>
+            <div class="fila accion grabacion">
+              <button class="boton microfono estilo" id="boton voz segunda">Grabar respuesta</button>
+              <span class="texto muestra audio" id="muestra respuesta segunda">Sin audio grabado aún.</span>
+            </div>
+          </div>
+
+          <div class="tarjeta pregunta estilo">
+            <div class="encabezado pregunta">
+              <span class="numero pregunta">tercera</span>
+              <span class="texto pregunta estilo">¿Cuál es su manera habitual de argumentar para ir al grano?</span>
+            </div>
+            <div class="fila accion grabacion">
+              <button class="boton microfono estilo" id="boton voz tercera">Grabar respuesta</button>
+              <span class="texto muestra audio" id="muestra respuesta tercera">Sin audio grabado aún.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel pestana panel oculto" id="panel claves">
+          <p class="parrafo orientacion">Las claves se guardan solo en este computador.</p>
+          <label class="bloque campo ajuste" for="campo clave gemini">
+            <span>Clave privada de Gemini</span>
+            <input type="password" id="campo clave gemini" class="campo texto campo clave mono" placeholder="Pegue aquí su clave de Gemini">
+          </label>
+          <label class="bloque campo ajuste" for="campo clave claude">
+            <span>Clave privada de Claude</span>
+            <input type="password" id="campo clave claude" class="campo texto campo clave mono" placeholder="Pegue aquí su clave de Claude">
+          </label>
+          <button class="boton guardar claves" id="boton guardar claves">Guardar claves</button>
+        </div>
+
+        <div class="panel pestana panel oculto" id="panel historial">
+          <div class="fila historial cabecera" id="cabecera historial lista">
+            <p class="parrafo orientacion">Seleccione una consulta para verla de nuevo.</p>
+            <button class="boton vaciar historial" id="boton vaciar historial">Eliminar historial</button>
+            <div class="fila confirmacion vaciar" id="fila confirmacion vaciar">
+              <button class="boton cancelar vaciar" id="boton cancelar vaciar">Cancelar</button>
+              <button class="boton confirmar vaciar" id="boton confirmar vaciar">Sí, eliminar todo</button>
+            </div>
+          </div>
+          <div class="historial vacio" id="historial vacio">No hay consultas guardadas.</div>
+          <div class="lista historial" id="listado historial"></div>
+        </div>
+
+        <div class="panel pestana panel oculto" id="panel general">
+          <div class="fila conmutador">
+            <div class="textos conmutador">
+              <span class="titulo conmutador">Ocultar en transmisión</span>
+              <span class="subtitulo conmutador">La ventana no aparece en grabaciones ni videollamadas.</span>
+            </div>
+            <button class="boton interruptor interruptor activo violeta" id="conmutador proteccion">
+              <span class="circulo interruptor"></span>
+            </button>
+          </div>
+          <div class="fila seleccion general">
+            <span>Ciudad</span>
+            <select class="campo selector" id="selector ciudad">
+              <option value="Bogotá">Bogotá</option>
+              <option value="Medellín">Medellín</option>
+              <option value="Cali">Cali</option>
+              <option value="Barranquilla">Barranquilla</option>
+            </select>
+          </div>
+          <div class="fila seleccion general">
+            <span>Atajo de captura</span>
+            <span class="insignia atajo">Alt + Espacio</span>
+          </div>
+          <div class="bloque filtro resumen">
+            <span class="titulo conmutador">Filtro de privacidad</span>
+            <span class="subtitulo conmutador">Las preguntas con datos bancarios o protegidos se bloquean antes de enviarse.</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script src="logica/datos inicial.js"></script>

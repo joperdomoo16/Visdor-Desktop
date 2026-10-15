@@ -1,126 +1,108 @@
 # Documento de Diseño y Arquitectura de Interfaz de Visor Desktop
 
-Este documento detalla la estructura, organización y análisis exhaustivo de los componentes visuales definidos en el archivo index.html para la aplicación Visor Desktop. Su propósito es servir de guía técnica para evaluar la experiencia de usuario, optimizar la semántica del marcado y planificar mejoras en la presentación.
+Este documento detalla la estructura, organización y análisis exhaustivo de los componentes visuales definidos en el archivo index.html para la aplicación Visor Desktop. Su propósito es servir de guía técnica para evaluar la experiencia de usuario, optimizar la modularidad del marcado y documentar el modelo visual oficial adoptado en el proyecto.
 
-## 1. Visión General de la Interfaz
+## 1. Visión General del Modelo Visual
 
-Visor Desktop fue concebido como una tarjeta flotante de asistencia visual e interacción por voz que se superpone a las tareas activas del usuario en su computador. El diseño persigue tres metas fundamentales:
+Visor Desktop opera como una tarjeta flotante de asistencia visual e interacción por voz que se superpone a las tareas activas del usuario en su computador. El diseño adopta un estándar de interfaz contemporáneo con las siguientes pautas centrales:
 
-* Mínima invasión: Ocupar un espacio reducido en pantalla con estética oscura y bordes redondeados, garantizando lectura cómoda sin estorbar el contenido de trabajo.
-* Acceso directo a controles: Disponer de acciones inmediatas para iniciar la escucha continua, disparar capturas y copiar diagnósticos al portapapeles.
-* Modularidad y adaptabilidad: Desplegar paneles auxiliares de calibración y ajustes de forma condicional para mantener limpia el área principal.
+* Formato compacto: Tarjeta de cuatrocientos cuarenta píxeles de ancho con esquinas redondeadas de dieciséis píxeles, borde tenue y doble sombra perimetral profunda.
+* Tipografía corporativa: Integración de fuentes del sistema IBM Plex Sans para textos legibles e IBM Plex Mono para marcas temporales, atajos y código.
+* Paleta cromática de alto contraste: Fondo pizarra profundo, azul cerúleo para llamadas a la acción, verde esmeralda para estado disponible, rojo carmesí animado para micrófono activo y violeta suave para protección de transmisión.
+* Ergonomía de estado: Indicador circular dinámico que alterna entre giro continuo durante procesamiento de inteligencia artificial y pulso expansivo durante la escucha de voz.
 
-## 2. Desglose Estructural de index.html
+## 2. Desglose Estructural Modular de index.html
 
-El marcado del archivo index.html se organiza en bloques funcionales bien delimitados que representan la jerarquía visual de la tarjeta flotante.
+El documento index.html se organiza en módulos semánticos claramente diferenciados para garantizar un desacoplamiento efectivo entre la presentación y el comportamiento.
 
-### Bloque de Cabecera y Recursos Externos
+### Módulo de Cabecera y Navegación
 
-El documento se define bajo el estándar de lenguaje de marcado moderno con idioma español. En la cabecera head se establecen los metadatos de juego de caracteres y escala de visualización, seguidos de las hojas de estilo:
+Ubicado en el elemento header con clase bloque cabecera e identificador barra arrastre. Contiene dos estados de visualización mutuamente excluyentes:
 
-* Enlace a hoja de estilos de Bootstrap desde red de distribución de contenidos para establecer la tipografía base y el restablecimiento de estilos nativos.
-* Hoja de estilos principal ubicada en estilos/style.css, encargada de la paleta oscura, los paneles flotantes y las transiciones.
+* Cabecera principal:
+  * Título Visor con tipografía de grosor medio.
+  * Distintivo de protección con texto Oculto en transmisión.
+  * Espaciador elástico que empuja los controles a la derecha.
+  * Botón Ajustes para acceder a las opciones de configuración.
+  * Botón de cierre veloz con glifo de cruz.
+* Cabecera de ajustes:
+  * Botón Volver con flecha de retorno a la pantalla principal.
+  * Título de sección Ajustes.
+  * Botón de cierre veloz de la ventana.
 
-### Contenedor Principal del Visor
+### Módulo de Estado Dinámico
 
-El cuerpo body posee la clase fondo aplicacion, configurado con un fondo oscuro y selección de texto deshabilitada para operar como una utilidad de escritorio. Dentro del cuerpo se aloja la tarjeta principal:
+Sección inicial del cuerpo principal que orienta al usuario en todo momento:
 
-* Identificador visor principal con clase tarjeta flotante: Actúa como el lienzo contenedor con ancho máximo de quinientos píxeles, sombra pronunciada y borde sutil.
+* Indicador de punto con clases semánticas para reflejar disponibilidad, procesamiento en curso, captura activa, diálogo por voz o bloqueo por privacidad.
+* Título de estado con tipografía destacada de veinte píxeles.
+* Subtítulo con instrucciones en lenguaje natural colombiano sobre el siguiente paso sugerido.
 
-### Barra de Arrastre y Estado del Sistema
+### Módulo de Captura e Inspección Visual
 
-Ubicada en la parte superior con identificador barra arrastre y clase bloque cabecera. Cumple la doble función de zona de agarre para desplazar la ventana y barra de estado:
+Contenedor colapsable con identificador bloque captura que se despliega al ordenar una captura de pantalla:
 
-* Zona de estado: Agrupa cuatro indicadores visuales en forma de pastillas.
-  * Identificador estado visor: Comunica en texto el estado operativo actual, por ejemplo si está listo para captura o procesando.
-  * Etiqueta proteccion: Indica que la ventana se encuentra protegida contra capturas en transmisiones de pantalla.
-  * Identificador indicador escucha: Muestra si el modo de diálogo con micrófono continuo está activo o apagado.
-  * Etiqueta ciudad: Marcador regional establecido en Bogotá.
-* Zona de controles: Contiene tres botones de acción rápida.
-  * Identificador boton panel personalizacion: Alterna el despliegue del área de calibración de voz.
-  * Identificador boton panel ajustes: Alterna el formulario de claves de inteligencia artificial.
-  * Identificador boton cerrar ventana: Cierra el aplicativo de escritorio.
+* Caja con proporción dieciséis a diez y fondo tramado con retícula que aloja el elemento video oculto y el lienzo interactivo canvas.
+* Distintivo flotante con la leyenda captura de la ventana activa.
+* Capa de selección con recuadro delimitador de color azul celeste.
+* Fila de consulta que aparece al finalizar el trazo del ratón, con campo de texto y botón Consultar.
+* Enlace inferior para cancelar la captura y retornar al estado inicial.
 
-### Panel Desplegable de Personalización de Estilo de Habla
+### Módulo de Conversación en Vivo
 
-Sección identificada como area personalizacion con clase bloque ajustes. Este panel permanece oculto por defecto y se abre al pulsar el botón Mi estilo.
+Bloque integrado con identificador bloque conversacion que se activa al iniciar el modo de diálogo continuo:
 
-* Encabezado de sección y texto de ayuda que explica al usuario cómo entrenar el modelo respondiendo preguntas con su voz.
-* Tres tarjetas de calibración con clase tarjeta pregunta estilo. Cada una contiene el texto de la pregunta, un botón de captura de audio y un párrafo de muestra donde se transcribe el audio registrado:
-  * Primera pregunta: Orientada a la explicación de cobros y facturación en pesos.
-  * Segunda pregunta: Enfocada en la descripción rápida de un incidente técnico a un compañero.
-  * Tercera pregunta: Diseñada para capturar la forma habitual de argumentar e ir al grano.
+* Cabecera interna con el título Conversación en vivo y distintivo de micrófono activo.
+* Caja de mensajes con desplazamiento vertical que acumula cronológicamente las intervenciones:
+  * Mensaje vacío de cortesía cuando no hay intervenciones recientes.
+  * Elementos de mensaje con hora, etiqueta de pregunta detectada por voz o escrita, texto formulado y tarjeta de respuesta entregada por los modelos.
+* Fila de entrada complementaria con campo de texto de respaldo y botón Enviar para interactuar por teclado si el micrófono detecta interferencias de ruido.
 
-### Panel Desplegable de Ajustes de Credenciales
+### Módulo de Respuestas y Soluciones
 
-Contenedor con identificador area ajustes y clase bloque ajustes. Permite ingresar las credenciales privadas requeridas para interactuar con los modelos en la nube:
+Área con identificador bloque respuesta que proyecta diagnósticos generados a partir de recortes o preguntas manuales:
 
-* Etiqueta y campo de tipo contraseña con identificador campo clave gemini para la llave de Google.
-* Etiqueta y campo de tipo contraseña con identificador campo clave claude para la llave de Anthropic.
-* Botón de confirmación con identificador boton guardar claves para almacenar los datos en el almacenamiento local seguro del computador.
+* Etiqueta con la pregunta previa consultada.
+* Caja de texto preformateado con barra de desplazamiento para lectura cómoda de código o explicaciones.
+* Botón para copiar la solución al portapapeles y botón para descartar el resultado.
 
-### Bloque de Contenido Central y Zona Visual
+### Botonera Principal de Comandos
 
-Identificado como bloque contenido, constituye el núcleo de interacción del visor:
+Disposición en dos columnas simétricas para las acciones inmediatas:
 
-* Texto de orientación con identificador texto orientacion: Mensaje dinámico que guía al usuario según la etapa en la que se encuentre.
-* Área visual con identificador area visual: Contiene dos elementos esenciales para la inspección de pantalla:
-  * Elemento video con identificador lienzo video: Oculto a la vista directa, procesa el flujo de captura de la ventana activa.
-  * Elemento canvas con identificador lienzo seleccion: Lienzo interactivo donde se proyecta la imagen capturada y se dibuja el recuadro delimitador mediante el ratón.
+* Botón izquierdo para alternar el modo de diálogo en vivo, con fondo verde esmeralda al estar apagado y contorno rojo carmesí al estar activo.
+* Botón derecho para disparar la captura manual de la ventana activa.
+* Pie inferior con recordatorio del atajo Alt más Barra espaciadora y respuestas por voz al instante.
 
-### Bloque de Entrada para Consultas Técnicas
+### Módulo de Ajustes por Pestañas
 
-Identificado como area pregunta con clase bloque pregunta. Aparece únicamente después de haber seleccionado un recuadro sobre el lienzo:
+Sección con identificador vista ajustes que reemplaza el cuerpo principal al ingresar a configuración:
 
-* Etiqueta orientativa para la consulta.
-* Fila de entrada compuesta por un campo de texto con identificador campo consulta y un botón de acción con identificador boton consultar.
+* Barra de navegación con cuatro pestañas horizontales: Mi estilo, Claves, Historial y General.
+* Panel Mi estilo:
+  * Conmutador deslizante para activar o desactivar la respuesta con tono propio.
+  * Párrafo explicativo del entrenamiento de voz.
+  * Alerta de confirmación de estilo calibrado.
+  * Tres tarjetas de calibración con preguntas sobre facturación en pesos, errores técnicos y argumentación directa, cada una con botón de grabación y transcripción en tiempo real.
+* Panel Claves:
+  * Explicación de almacenamiento local seguro.
+  * Campos protegidos para claves privadas de Gemini y Claude.
+  * Botón para registrar credenciales en el computador.
+* Panel Historial:
+  * Cabecera con botón de vaciado y diálogo de confirmación para evitar borrados accidentales.
+  * Listado interactivo de consultas previas con fecha, resumen de pregunta y detalle de respuesta, recuperables con un clic.
+  * Mensaje informativo cuando el historial se encuentra vacío.
+* Panel General:
+  * Conmutador para ocultar la ventana durante transmisiones de pantalla en Teams o Meet.
+  * Selector desplegable de ciudad con opciones para Bogotá, Medellín, Cali y Barranquilla.
+  * Recordatorio del atajo de captura de pantalla.
+  * Resumen del filtro local contra datos bancarios y contraseñas.
 
-### Caja de Despliegue de Respuestas y Soluciones
+## 3. Secuencia de Carga y Acoplamiento Modular
 
-Identificada como caja solucion con clase caja respuesta:
+El documento preserva al cierre del cuerpo el orden estricto de carga por capas de responsabilidad:
 
-* Elemento de texto con identificador texto prediccion: Espacio dinámico donde se imprime la solución técnica, el código generado o el análisis descriptivo entregado por la inteligencia artificial.
-
-### Historial Reciente de Consultas
-
-Identificado como bloque historial:
-
-* Etiqueta de sección de historial.
-* Contenedor con identificador listado historial y clase caja historial: Lista desplazable que presenta las consultas previas guardadas en el equipo, permitiendo recuperarlas con un solo clic.
-
-### Barra de Comandos y Acciones Rápidas
-
-Bloque inferior con clase bloque acciones. Contiene tres botones de control primarios:
-
-* Identificador boton alternar dialogo: Inicia o pausa el modo de diálogo en vivo con escucha activa por micrófono.
-* Identificador boton capturar: Dispara la captura visual manual de la ventana seleccionada.
-* Identificador boton copiar: Transfiere el contenido de la respuesta directamente al portapapeles del sistema.
-
-### Secuencia de Inclusión de Scripts al Cierre del Cuerpo
-
-Siguiendo el principio de separación estricta de responsabilidades y orden de interpretación secuencial, se cargan los doce archivos de lógica al final del documento:
-
-* Capa de base y datos: Carga de datos inicial.js sin dependencias previas.
-* Capa de servicios y reglas: Carga de almacenamiento.js, validaciones.js, filtro privacidad.js, conexion modelos.js, personalizacion estilo.js, captura ventana.js, recorte visual.js, escucha en vivo.js y enrutador logico.js.
-* Capa de interfaz: Carga de interfaz.js para la gestión exclusiva del árbol de elementos.
-* Capa de control: Carga de script.js para inicializar escuchas de eventos y coordinar los módulos.
-
-## 3. Diagnóstico de Oportunidades y Mejoras
-
-A partir del análisis detallado de la estructura de index.html, se identifican las siguientes oportunidades de optimización:
-
-### Transición hacia Semántica Estructural
-
-Actualmente la totalidad de los contenedores emplea divisiones div genéricas. Se recomienda evolucionar hacia elementos nativos como header para la barra superior, main para la zona central de contenido, section para los paneles desplegables y footer para la barra de botones de acción. Esto enriquece el valor estructural y facilita el mantenimiento.
-
-### Renderizado Dinámico del Cuestionario de Voz
-
-Las tres preguntas de calibración están escritas directamente dentro del marcado HTML. Conectar la creación de estas tarjetas con la lista definida en datos inicial.js mediante el módulo de interfaz permitiría agregar o modificar preguntas sin necesidad de alterar el archivo HTML principal.
-
-### Accesibilidad y Experiencia con Teclado
-
-Es conveniente incorporar atributos aria en los paneles colapsables para indicar su estado visible u oculto ante tecnologías de asistencia. Asimismo, conviene asignar roles específicos a la barra de arrastre y al área interactiva de recorte.
-
-### Organización de Hojas de Estilo por Componente
-
-Conforme crezca la complejidad visual, las reglas de los paneles desplegables y del lienzo de recorte pueden trasladarse a archivos CSS específicos por módulo dentro de la carpeta de estilos, manteniendo style.css enfocado en las variables globales y la distribución base.
+* Base y datos: Carga de datos inicial.js sin dependencias previas.
+* Servicios y reglas: Carga de almacenamiento.js, validaciones.js, filtro privacidad.js, conexion modelos.js, personalizacion estilo.js, captura ventana.js, recorte visual.js, escucha en vivo.js y enrutador logico.js.
+* Presentación e interfaz: Carga de interfaz.js para la manipulación exclusiva de los elementos visuales.
+* Controlador de eventos: Carga de script.js para registrar oyentes y coordinar el flujo operativo.

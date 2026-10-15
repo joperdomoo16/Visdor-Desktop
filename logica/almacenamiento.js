@@ -4,6 +4,9 @@ const moduloAlmacenamiento = {
   "clave claude": "clave privada claude",
   "clave perfil": "perfil de estilo de dialogo",
   "clave ultima consulta": "ultima consulta",
+  "clave ciudad": "ciudad seleccionada",
+  "clave proteccion": "proteccion transmision activa",
+  "clave estilo activo": "estilo personalizado activo",
 
   "obtener registros historial": function () {
     const clave = moduloAlmacenamiento["clave historial"];
@@ -18,14 +21,16 @@ const moduloAlmacenamiento = {
     return moduloDatosIniciales["registros prueba"] || [];
   },
 
-  "guardar registro historial": function (textoDiagnostico) {
+  "guardar registro historial": function (textoPregunta, textoDiagnostico) {
     const clave = moduloAlmacenamiento["clave historial"];
     const registros = moduloAlmacenamiento["obtener registros historial"]();
+    const horaActual = new Date().toLocaleTimeString();
     registros.unshift({
-      fecha: new Date().toLocaleTimeString(),
+      fecha: horaActual,
+      pregunta: textoPregunta || "Consulta técnica",
       detalle: textoDiagnostico
     });
-    if (registros.length > 5) {
+    if (registros.length > 20) {
       registros.pop();
     }
     localStorage.setItem(clave, JSON.stringify(registros));
@@ -70,6 +75,44 @@ const moduloAlmacenamiento = {
   "guardar perfil estilo": function (perfilGenerado) {
     const clave = moduloAlmacenamiento["clave perfil"];
     localStorage.setItem(clave, perfilGenerado);
+  },
+
+  "obtener estilo activo": function () {
+    const clave = moduloAlmacenamiento["clave estilo activo"];
+    const valor = localStorage.getItem(clave);
+    if (valor === null) {
+      return true;
+    }
+    return valor === "activo";
+  },
+
+  "guardar estilo activo": function (activo) {
+    const clave = moduloAlmacenamiento["clave estilo activo"];
+    localStorage.setItem(clave, activo ? "activo" : "inactivo");
+  },
+
+  "obtener proteccion": function () {
+    const clave = moduloAlmacenamiento["clave proteccion"];
+    const valor = localStorage.getItem(clave);
+    if (valor === null) {
+      return true;
+    }
+    return valor === "activa";
+  },
+
+  "guardar proteccion": function (activa) {
+    const clave = moduloAlmacenamiento["clave proteccion"];
+    localStorage.setItem(clave, activa ? "activa" : "inactiva");
+  },
+
+  "obtener ciudad": function () {
+    const clave = moduloAlmacenamiento["clave ciudad"];
+    return localStorage.getItem(clave) || "Bogotá";
+  },
+
+  "guardar ciudad": function (nombreCiudad) {
+    const clave = moduloAlmacenamiento["clave ciudad"];
+    localStorage.setItem(clave, nombreCiudad);
   },
 
   "guardar ultima consulta": function (textoSolucion) {
