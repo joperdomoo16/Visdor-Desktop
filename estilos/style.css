@@ -1,7 +1,7 @@
 body.fondo.aplicacion {
   margin: 0;
   padding: 12px;
-  background-color: transparent;
+  background-color: #0f172a;
   font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   color: #f1f5f9;
   user-select: none;

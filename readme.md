@@ -11,6 +11,8 @@ Visor Desktop es una aplicación de escritorio diseñada para asistir al usuario
 El aplicativo se organiza siguiendo una arquitectura modular con separación estricta de responsabilidades:
 
 - index.html: Punto de entrada principal en la raíz con estructura base y enlaces de carga.
+- DESIGN.md: Documento de arquitectura, desglose visual y análisis de oportunidades de mejora.
+- .gitignore: Reglas de exclusión para dependencias locales y archivos temporales.
 - package.json: Definición de comandos de ejecución y empaquetado del archivo ejecutable.
 - readme.md: Documentación y guía del proyecto.
 - estilos/style.css: Hoja de estilo global con colores, márgenes y diseño translúcido.
